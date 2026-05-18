@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS tickets_estadia (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  nro_ticket VARCHAR(20) NOT NULL UNIQUE,
+  patente VARCHAR(10) NOT NULL,
+  tipo_vehiculo ENUM('AUTO','MOTO','CAMIONETA') NOT NULL,
+  hora_entrada DATETIME NOT NULL,
+  hora_salida DATETIME NULL,
+  minutos_estadia INT NULL,
+  tarifa_aplicada VARCHAR(50) NULL,
+  importe_calculado DECIMAL(10,2) NULL,
+  forma_pago ENUM('EFECTIVO','TARJETA','TRANSFERENCIA') NULL,
+  estado ENUM('ABIERTO','CERRADO','ANULADO') NOT NULL,
+  motivo_anulacion VARCHAR(255) NULL,
+  observaciones VARCHAR(255) NULL,
+  creado_en DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  cerrado_en DATETIME NULL,
+  INDEX idx_patente_estado (patente, estado),
+  INDEX idx_estado_entrada (estado, hora_entrada),
+  INDEX idx_entrada (hora_entrada)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
